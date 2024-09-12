@@ -1,0 +1,23 @@
+<?php
+
+require_once("connection.php");
+
+
+$mmb_name = $_POST["mmb_name"];
+$mmb_surname = $_POST["mmb_surname"];
+$mmb_username = $_POST["mmb_username"];
+$mmb_pwd = $_POST["mmb_pwd"]; 
+
+// ใส่ password เข้าไปใน database
+$sql = "INSERT INTO member (mmb_name, mmb_surname, mmb_username, mmb_pwd) 
+VALUES ('$mmb_name', '$mmb_surname', '$mmb_username', '$mmb_pwd')";
+mysqli_query($conn, $sql) or die(mysqli_error($conn));
+
+// แสดงข้อมูลที่ใส่
+echo "ชื่อ : $mmb_name<br>"; 
+echo "นามสกุล : $mmb_surname<br>";
+echo "ชื่อผู้ใช้ : $mmb_username<br>";
+echo "รหัส : $mmb_pwd<br>";
+
+mysqli_close($conn);
+?>
