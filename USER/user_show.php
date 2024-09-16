@@ -1,5 +1,14 @@
 <?php
+session_start();
+
 include 'connect_db.php';
+
+// ตรวจสอบว่าผู้ใช้ได้เข้าสู่ระบบหรือไม่
+if (!isset($_SESSION['username'])) {
+    // ถ้ายังไม่ได้เข้าสู่ระบบ ให้เปลี่ยนเส้นทางไปยังหน้าเข้าสู่ระบบ
+    header('Location: /Dynamic66/auth/login.php');
+    exit();
+}
 
 // ฟังก์ชันสำหรับแสดงตารางข้อมูล
 function displayTable($conn, $condition, $header, $cssClass) {
