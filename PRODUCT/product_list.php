@@ -1,16 +1,12 @@
 <?php
 session_start();
-
-// Include database connection file
 include 'connect_db.php';
 
-// Check if the user is logged in
 if (!isset($_SESSION['username'])) {
     header('Location: /Dynamic66/auth/login.php');
     exit();
 }
 
-// Function to display a data table
 function displayTable(mysqli $conn, int $showStatus, string $header, string $cssClass) {
     $sql = "SELECT p.prod_id, p.prod_name, p.prod_desc, pt.pty_name 
             FROM product p
@@ -20,13 +16,13 @@ function displayTable(mysqli $conn, int $showStatus, string $header, string $css
     $stmt = $conn->prepare($sql);
 
     if (!$stmt) {
-        die("Error preparing statement: " . htmlspecialchars($conn->error));
+        die("Error preparing statement: " . $conn->error);
     }
 
     $stmt->bind_param("i", $showStatus);
 
     if (!$stmt->execute()) {
-        die("Error executing statement: " . htmlspecialchars($stmt->error));
+        die("Error executing statement: " . $stmt->error);
     }
 
     $result = $stmt->get_result();
@@ -73,7 +69,7 @@ $sql = "SELECT p.prod_id, p.prod_name, p.prod_desc, pt.pty_name
 $result = $conn->query($sql);
 
 if (!$result) {
-    die("Error executing query: " . htmlspecialchars($conn->error));
+    die("Error executing query: " . $conn->error);
 }
 
 if ($result->num_rows > 0) {
@@ -98,7 +94,7 @@ if ($result->num_rows > 0) {
         <td>{$row["prod_desc"]}</td>
         <td>{$row["pty_name"]}</td>
         <td><a href='product_edit.php?id={$row["prod_id"]}'>Edit</a></td>
-        <td><a href='product_del.php?id={$row["prod_id"]}' onclick=\"return confirm('Are you sure you want to delete this product?');\">Delete</a></td>
+        <td><a href='product_delete.php?id={$row["prod_id"]}'>Delete</a></td>
         </tr>";
     }
 
@@ -108,7 +104,6 @@ if ($result->num_rows > 0) {
     echo "No products found.";
 }
 
-// Close the database connection
 $conn->close();
 ?>
 <!DOCTYPE html>

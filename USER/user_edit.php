@@ -2,6 +2,12 @@
 // เชื่อมต่อกับฐานข้อมูล
 include 'connect_db.php';
 
+session_start();
+if (!isset($_SESSION['username'])) {
+    header('Location: /Dynamic66/auth/login.php');
+    exit();
+}
+
 // ตรวจสอบว่ามีการส่งข้อมูลหรือไม่
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // รับข้อมูลจากฟอร์ม

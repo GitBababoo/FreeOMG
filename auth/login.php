@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($result->num_rows > 0) {
             $_SESSION['username'] = $username;
-            header("Location: /Dynamic66/USER/user_show.php");
+            header("Location: /Dynamic66/index.php");
             exit();
         } else {
             $error = "ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง";
